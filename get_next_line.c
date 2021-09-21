@@ -12,25 +12,35 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "get_next_line.h"
 char *get_next_line(int fd);
 int	main(void)
 {
 	int		file = open("test.txt", O_RDONLY);
-	
-	get_next_line(file);
+	char	*next_line;
+	next_line = get_next_line(file);
+	printf("%s", next_line);
+	next_line = get_next_line(file);
+	printf("%s", next_line);
 	close(file);
 }
 char *get_next_line(int fd)
 {
-	static char holder = '\0';
 	char		*str;
+	static char	*holder = NULL;
 	int			size;
 	int			i;
 	i = 0;
-	size = read(fd, str, 100);
-	str[size] = '\0';
-	/* while(str[i] != '\n' || str[i] != '\0')
-		i++; */
-	printf("\\n em : %s", str);	
+	holder = (char *)malloc(sizeof(char) * 100);
+	size = read(fd, holder, 100);
+	holder[size] = '\0';
+	while (holder[i] != '\n' && i < size)
+		i++;
+	i++;
+	str = (char *)malloc(sizeof(char) * i);
+	strncpy(str, holder, i);
+	holder += i;
+	printf("size = %i\n i = %i\n", size, i);
+	return (str);
 }
