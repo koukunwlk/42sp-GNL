@@ -6,7 +6,7 @@
 /*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 15:58:04 by mamaro-d          #+#    #+#             */
-/*   Updated: 2021/09/22 18:35:02 by mamaro-d         ###   ########.fr       */
+/*   Updated: 2021/09/23 17:56:18 by mamaro-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char	*get_next_line(int fd)
 	size_read = read_file(&keep, &buffer, &line, fd);
 	if (!size_read)
 		return (ft_strdup(""));
+	free(buffer);
 	return (line);
 }
 
@@ -88,7 +89,7 @@ char	*ft_strchr(const char *s, int c)
 {
 	int		i;
 
-	i = 0 ;
+	i = 0;
 	while (i <= ft_strlen(s))
 	{
 		if (s[i] == (char)c)
