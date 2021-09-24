@@ -6,7 +6,7 @@
 /*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 15:58:04 by mamaro-d          #+#    #+#             */
-/*   Updated: 2021/09/24 15:12:21 by mamaro-d         ###   ########.fr       */
+/*   Updated: 2021/09/24 15:17:24 by mamaro-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*get_next_line(int fd)
 	char		*line;
 	size_t		size_read;
 
+	if(fd < 0)
+		return(NULL);
 	line = ft_strdup("");
 	buffer = (char *)calloc(sizeof(char), BUFFER_SIZE + 1);
 	keep = ft_strdup("");
