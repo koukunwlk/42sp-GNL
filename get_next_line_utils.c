@@ -6,7 +6,7 @@
 /*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 15:58:23 by mamaro-d          #+#    #+#             */
-/*   Updated: 2021/09/22 18:26:56 by mamaro-d         ###   ########.fr       */
+/*   Updated: 2021/09/24 14:53:15 by mamaro-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strjoin(char const *s1, const char *s2)
 	if (!s1 || !s2)
 		return (NULL);
 	size = ft_strlen(s1) + ft_strlen(s2) + 1;
-	str = (char *)malloc(sizeof(char) * size);
+	str = (char *)calloc(sizeof(char),  size);
 	if (str == NULL)
 		return (NULL);
 	ft_strlcat(str, s1, size);
@@ -71,8 +71,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	else
 		return (ft_strdup(""));
-	ptr = (char *)malloc((len + 1) * sizeof(char));
-	ptr[len + 1] = '\0';
+	ptr = (char *)calloc((len + 1), sizeof(char));
 	if (!ptr)
 		return (NULL);
 	ft_strlcpy(ptr, s + start, len + 1);
@@ -100,7 +99,7 @@ int	ft_strlen(const char *str)
 	int		i;
 
 	i = 0;
-	while (str[i] != 0)
+	while (str[i])
 		i++;
 	return (i);
 }

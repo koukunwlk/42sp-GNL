@@ -6,12 +6,13 @@
 /*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 15:58:04 by mamaro-d          #+#    #+#             */
-/*   Updated: 2021/09/23 17:56:18 by mamaro-d         ###   ########.fr       */
+/*   Updated: 2021/09/24 15:12:21 by mamaro-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
+#include <stdlib.h>
+#include <string.h>
 char	*get_next_line(int fd)
 {
 	static char	*keep = NULL;
@@ -20,12 +21,15 @@ char	*get_next_line(int fd)
 	size_t		size_read;
 
 	line = ft_strdup("");
-	buffer = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
+	buffer = (char *)calloc(sizeof(char), BUFFER_SIZE + 1);
 	keep = ft_strdup("");
 	size_read = read_file(&keep, &buffer, &line, fd);
 	if (!size_read)
+	{	
+		free(keep);
 		return (ft_strdup(""));
-	free(buffer);
+	}
+	free(keep);
 	return (line);
 }
 
@@ -43,7 +47,9 @@ size_t	read_file(char **keep, char **buffer, char **line, int fd)
 		*keep = ft_strjoin(tmp_keep, *buffer);
 		free(tmp_keep);
 	}
+	free(*line);
 	*line = split_keep(keep);
+	free((*buffer));
 	return(result);
 }
 
@@ -76,11 +82,10 @@ char	*ft_strdup(const char *s)
 	char	*ptr;
 
 	len = ft_strlen(s) + 1;
-	ptr = (char *)malloc(sizeof(char) * len);
-	ptr[len] = '\0';
+	ptr = (char *)calloc(sizeof(char), len);
 	if (ptr == NULL)
 		return (NULL);
-	while (len--)
+	while(len--)
 		ptr[len] = s[len];
 	return (ptr);
 }
