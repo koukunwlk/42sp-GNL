@@ -6,13 +6,14 @@
 /*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 15:58:04 by mamaro-d          #+#    #+#             */
-/*   Updated: 2021/09/24 15:17:24 by mamaro-d         ###   ########.fr       */
+/*   Updated: 2021/09/24 16:24:12 by mamaro-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 char	*get_next_line(int fd)
 {
 	static char	*keep = NULL;
@@ -20,8 +21,8 @@ char	*get_next_line(int fd)
 	char		*line;
 	size_t		size_read;
 
-	if(fd < 0)
-		return(NULL);
+	//if(fd < 0)
+	//	return(NULL);
 	line = ft_strdup("");
 	buffer = (char *)calloc(sizeof(char), BUFFER_SIZE + 1);
 	keep = ft_strdup("");
@@ -29,7 +30,7 @@ char	*get_next_line(int fd)
 	if (!size_read)
 	{	
 		free(keep);
-		return (ft_strdup(""));
+		return (NULL);
 	}
 	free(keep);
 	return (line);
@@ -50,8 +51,10 @@ size_t	read_file(char **keep, char **buffer, char **line, int fd)
 		free(tmp_keep);
 	}
 	free(*line);
-	*line = split_keep(keep);
 	free((*buffer));
+	if(!result)
+		return (0);
+	*line = split_keep(keep);
 	return(result);
 }
 
