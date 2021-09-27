@@ -6,7 +6,7 @@
 /*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 14:09:52 by mamaro-d          #+#    #+#             */
-/*   Updated: 2021/09/27 16:30:06 by mamaro-d         ###   ########.fr       */
+/*   Updated: 2021/09/27 17:46:54 by mamaro-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ char	*get_current_line(char	**tmp_holder)
 		line = ft_substr(*tmp_holder, 0, size + 1);
 		tmp = ft_strdup(&(*tmp_holder)[size + 1]);
 		free(*tmp_holder);
+		*tmp_holder = NULL;
 		if (*tmp)
 			*tmp_holder = ft_strdup(tmp);
 		free(tmp);
