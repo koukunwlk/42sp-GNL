@@ -5,106 +5,100 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/20 15:58:04 by mamaro-d          #+#    #+#             */
-/*   Updated: 2021/09/24 16:24:12 by mamaro-d         ###   ########.fr       */
+/*   Created: 2021/09/27 14:09:52 by mamaro-d          #+#    #+#             */
+/*   Updated: 2021/09/27 16:17:23 by mamaro-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
+
 char	*get_next_line(int fd)
 {
-	static char	*keep = NULL;
-	char		*buffer;
-	char		*line;
-	size_t		size_read;
+	char			*buffer;
+	size_t			size_read;
+	char			*line;
 
-	//if(fd < 0)
-	//	return(NULL);
-	line = ft_strdup("");
-	buffer = (char *)calloc(sizeof(char), BUFFER_SIZE + 1);
-	keep = ft_strdup("");
-	size_read = read_file(&keep, &buffer, &line, fd);
-	if (!size_read)
-	{	
-		free(keep);
+	buffer = malloc(sizeof(char) * BUFFER_SIZE + 1);
+	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, buffer, 0) < 0)
 		return (NULL);
-	}
-	free(keep);
+	size_read = read(fd, buffer, BUFFER_SIZE);
+	if (size_read < 0 )
+		return (NULL);
+	line = read_file(size_read, buffer, fd);
+	free(buffer);
 	return (line);
 }
 
-size_t	read_file(char **keep, char **buffer, char **line, int fd)
+static char	*read_file(size_t size_read, char *buffer, int fd)
 {
-	char	*tmp_keep;
-	size_t	result;
+	static char	*holder;
+	char		*tmp_holder;
+	char		*line;
 
-	result = 1;
-	while (!ft_strchr(*keep, '\n') && result)
+	while (size_read > 0)
 	{
-		result = read(fd, *buffer, BUFFER_SIZE);
-		(*buffer)[result] = '\0';
-		tmp_keep = *keep;
-		*keep = ft_strjoin(tmp_keep, *buffer);
-		free(tmp_keep);
-	}
-	free(*line);
-	free((*buffer));
-	if(!result)
-		return (0);
-	*line = split_keep(keep);
-	return(result);
-}
-
-char	*split_keep(char **keep)
-{
-	size_t	i;
-	char	*keep_cpy;
-	char	*tmp_keep;
-
-	i = 0;
-	while ((*keep)[i] != '\0')
-	{
-		if ((*keep)[i] == '\n')
-		{
-			i++;
+		buffer[size_read] = '\0';
+		if(holder == 0)
+			holder = ft_strdup("");
+		tmp_holder = ft_strdup(holder);
+		free(holder);
+		holder = ft_strjoin_and_free(tmp_holder, buffer);
+		if(ft_strchr(holder, '\n'))
 			break ;
-		}
-		i++;
+		size_read = read(fd, buffer, BUFFER_SIZE);
 	}
-	tmp_keep = *keep;
-	keep_cpy = ft_substr(tmp_keep, 0, i);
-	*keep = ft_strdup(&(*keep)[i]);
-	free(tmp_keep);
-	return (keep_cpy);
-}
-
-char	*ft_strdup(const char *s)
-{
-	size_t	len;
-	char	*ptr;
-
-	len = ft_strlen(s) + 1;
-	ptr = (char *)calloc(sizeof(char), len);
-	if (ptr == NULL)
+	if (buffer == 0 && holder == 0)
 		return (NULL);
-	while(len--)
-		ptr[len] = s[len];
-	return (ptr);
+	line = get_current_line(&holder);
+	return (line);	
 }
 
-char	*ft_strchr(const char *s, int c)
+static char	*ft_strjoin_and_free(char *s1, char *s2)
 {
-	int		i;
+	char	*new_str;
+	size_t	size_s1;
+	size_t	size_s2;
 
-	i = 0;
-	while (i <= ft_strlen(s))
+	new_str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+		if(!new_str)
+			return (NULL);
+	size_s1 = -1;
+	size_s2 = -1;
+
+	while(s1[++size_s1])
+		new_str[size_s1] = s1[size_s1];
+	while(s2[++size_s2])
+		new_str[size_s1 + size_s2] = s2[size_s2];
+	new_str[size_s1 + size_s2] = '\0';
+	free(s1);
+	s1 = NULL;
+	return (new_str);
+}
+
+char	*get_current_line(char	**tmp_holder)
+{
+	char	*line;
+	char	*tmp;
+	int		size;
+
+	size = 0;
+	while (((*tmp_holder)[size] != '\n') && ((*tmp_holder)[size] != '\0'))
+		size++;
+	if((*tmp_holder)[size] == 0)
 	{
-		if (s[i] == (char)c)
-			return ((char *)&s[i]);
-		i++;
+		line = ft_strdup(*tmp_holder);
+		free(*tmp_holder);
+		*tmp_holder = NULL;
 	}
-	return (NULL);
+	else
+	{
+		line = ft_substr(*tmp_holder, 0, size + 1);
+		tmp = ft_strdup(&(*tmp_holder)[size + 1]);
+		free(*tmp_holder);
+		if (*tmp)
+			*tmp_holder = ft_strdup(tmp);
+		free(tmp);
+		tmp = NULL;
+	}
+	return (line);
 }
