@@ -6,7 +6,7 @@
 /*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 14:09:52 by mamaro-d          #+#    #+#             */
-/*   Updated: 2021/09/27 20:47:19 by mamaro-d         ###   ########.fr       */
+/*   Updated: 2021/09/27 21:06:50 by mamaro-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ char	*get_next_line(int fd)
 	size_read = read(fd, buffer, BUFFER_SIZE);
 	if (size_read < 0 )
 		return (NULL);
+	
 	line = read_file(size_read, buffer, fd);
 	return (line);
 }
@@ -45,7 +46,7 @@ char	*read_file(size_t size_read, char *buffer, int fd)
 			break ;
 		size_read = read(fd, buffer, BUFFER_SIZE);
 	}
-	if (buffer == 0 && holder == 0)
+	if (buffer == 0 || holder == 0)
 		return (NULL);
 	line = get_current_line(&holder);
 	return (line);	
