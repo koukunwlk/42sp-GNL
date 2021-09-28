@@ -6,11 +6,11 @@
 /*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 14:09:52 by mamaro-d          #+#    #+#             */
-/*   Updated: 2021/09/27 21:21:36 by mamaro-d         ###   ########.fr       */
+/*   Updated: 2021/09/27 21:22:52 by mamaro-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*get_next_line(int fd)
 {

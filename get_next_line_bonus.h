@@ -6,12 +6,12 @@
 /*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 14:09:55 by mamaro-d          #+#    #+#             */
-/*   Updated: 2021/09/27 21:18:27 by mamaro-d         ###   ########.fr       */
+/*   Updated: 2021/09/27 21:22:44 by mamaro-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 # define MAX_OPEN 12288
 # include <fcntl.h>
 # include <stdlib.h>
