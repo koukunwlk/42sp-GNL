@@ -6,7 +6,7 @@
 /*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 14:09:52 by mamaro-d          #+#    #+#             */
-/*   Updated: 2021/09/28 18:41:52 by mamaro-d         ###   ########.fr       */
+/*   Updated: 2021/09/28 18:51:38 by mamaro-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,7 @@ char	*read_file(size_t size_read, char *buffer, int fd)
 		size_read = read(fd, buffer, BUFFER_SIZE);
 	}
 	if (buffer == 0 || holder == 0)
-	{
-		free(holder);
 		return (NULL);
-	}
 	line = get_current_line(&holder);
 	return (line);
 }
