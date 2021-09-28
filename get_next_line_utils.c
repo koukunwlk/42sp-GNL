@@ -6,7 +6,7 @@
 /*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 14:33:14 by mamaro-d          #+#    #+#             */
-/*   Updated: 2021/09/27 15:28:53 by mamaro-d         ###   ########.fr       */
+/*   Updated: 2021/09/27 21:13:56 by mamaro-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ char	*ft_strdup(char *src)
 	size = 0;
 	while (src[size])
 		++size;
-	if (!(new = malloc(sizeof(char) * (size + 1))))
+	new = malloc(sizeof(char) * (size + 1));
+	if (!new)
 		return (NULL);
 	i = 0;
 	while (src[i])

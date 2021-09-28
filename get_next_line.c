@@ -6,7 +6,7 @@
 /*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 14:09:52 by mamaro-d          #+#    #+#             */
-/*   Updated: 2021/09/27 21:06:50 by mamaro-d         ###   ########.fr       */
+/*   Updated: 2021/09/27 21:12:05 by mamaro-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ char	*get_next_line(int fd)
 	size_read = read(fd, buffer, BUFFER_SIZE);
 	if (size_read < 0 )
 		return (NULL);
-	
 	line = read_file(size_read, buffer, fd);
 	return (line);
 }
@@ -37,19 +36,19 @@ char	*read_file(size_t size_read, char *buffer, int fd)
 	while (size_read > 0)
 	{
 		buffer[size_read] = '\0';
-		if(holder == 0)
+		if (holder == 0)
 			holder = ft_strdup("");
 		tmp_holder = ft_strdup(holder);
 		free(holder);
 		holder = ft_strjoin_and_free(tmp_holder, buffer);
-		if(ft_strchr(holder, '\n'))
+		if (ft_strchr(holder, '\n'))
 			break ;
 		size_read = read(fd, buffer, BUFFER_SIZE);
 	}
 	if (buffer == 0 || holder == 0)
 		return (NULL);
 	line = get_current_line(&holder);
-	return (line);	
+	return (line);
 }
 
 char	*ft_strjoin_and_free(char *s1, char *s2)
@@ -59,14 +58,13 @@ char	*ft_strjoin_and_free(char *s1, char *s2)
 	size_t	size_s2;
 
 	new_str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-		if(!new_str)
-			return (NULL);
+	if (!new_str)
+		return (NULL);
 	size_s1 = -1;
 	size_s2 = -1;
-
-	while(s1[++size_s1])
+	while (s1[++size_s1])
 		new_str[size_s1] = s1[size_s1];
-	while(s2[++size_s2])
+	while (s2[++size_s2])
 		new_str[size_s1 + size_s2] = s2[size_s2];
 	new_str[size_s1 + size_s2] = '\0';
 	free(s1);
@@ -83,7 +81,7 @@ char	*get_current_line(char	**tmp_holder)
 	size = 0;
 	while (((*tmp_holder)[size] != '\n') && ((*tmp_holder)[size] != '\0'))
 		size++;
-	if((*tmp_holder)[size] == 0)
+	if ((*tmp_holder)[size] == 0)
 	{
 		line = ft_strdup(*tmp_holder);
 		free(*tmp_holder);
