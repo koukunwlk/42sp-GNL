@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 14:09:52 by mamaro-d          #+#    #+#             */
-/*   Updated: 2021/09/27 21:20:06 by mamaro-d         ###   ########.fr       */
+/*   Updated: 2021/09/27 21:16:57 by mamaro-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,25 @@ char	*get_next_line(int fd)
 
 char	*read_file(size_t size_read, char *buffer, int fd)
 {
-	static char	*holder[MAX_OPEN];
+	static char	*holder[];
 	char		*tmp_holder;
 	char		*line;
 
 	while (size_read > 0)
 	{
 		buffer[size_read] = '\0';
-		if (holder[fd] == 0)
-			holder[fd] = ft_strdup("");
-		tmp_holder = ft_strdup(holder[fd]);
-		free(holder[fd]);
-		holder[fd] = ft_strjoin_and_free(tmp_holder, buffer);
-		if (ft_strchr(holder[fd], '\n'))
+		if (holder == 0)
+			holder = ft_strdup("");
+		tmp_holder = ft_strdup(holder);
+		free(holder);
+		holder = ft_strjoin_and_free(tmp_holder, buffer);
+		if (ft_strchr(holder, '\n'))
 			break ;
 		size_read = read(fd, buffer, BUFFER_SIZE);
 	}
-	if (buffer == 0 || holder[fd] == 0)
+	if (buffer == 0 || holder == 0)
 		return (NULL);
-	line = get_current_line(&holder[fd]);
+	line = get_current_line(&holder);
 	return (line);
 }
 
