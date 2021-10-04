@@ -6,7 +6,7 @@
 /*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 14:09:52 by mamaro-d          #+#    #+#             */
-/*   Updated: 2021/09/28 18:51:38 by mamaro-d         ###   ########.fr       */
+/*   Updated: 2021/10/04 17:42:43 by mamaro-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE < 1 || read(fd, buffer, 0) < 0)
 		return (NULL);
 	size_read = read(fd, buffer, BUFFER_SIZE);
-	if (size_read < 0 )
+	if (size_read < 0)
 		return (NULL);
 	line = read_file(size_read, buffer, fd);
 	return (line);
